@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面试准备 | {公司名} · {岗位名}</title>
+<style>
+/* === 基础重置 === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
+
+/* === 顶部 Header === */
+.header { background: linear-gradient(135deg, #07c160 0%, #06ad56 100%); color: white; padding: 2rem; text-align: center; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+.header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+.header p { opacity: 0.9; font-size: 0.95rem; }
+
+/* === 导航栏（sticky） === */
+.nav { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 1rem 1.5rem; background: white; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; }
+.nav a { text-decoration: none; color: #555; font-size: 0.85rem; padding: 0.4rem 0.8rem; border-radius: 20px; background: #f0f0f0; transition: all 0.2s; }
+.nav a:hover, .nav a.active { background: #07c160; color: white; }
+
+/* === 主容器 === */
+.container { max-width: 800px; margin: 0 auto; padding: 1rem; }
+
+/* === 卡片 === */
+.card { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.card h2 { font-size: 1.2rem; color: #07c160; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.card h2::before { content: ''; width: 4px; height: 20px; background: #07c160; border-radius: 2px; display: inline-block; }
+.card h3 { font-size: 1rem; color: #333; margin: 1rem 0 0.5rem; font-weight: 600; }
+
+/* === 徽章系统 === */
+.badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 10px; font-size: 0.75rem; font-weight: 600; }
+.badge-green { background: #e8f8ef; color: #07c160; }
+.badge-orange { background: #fff3e0; color: #f57c00; }
+.badge-red { background: #ffebee; color: #e53935; }
+.badge-blue { background: #e3f2fd; color: #1976d2; }
+.badge-gray { background: #f0f0f0; color: #888; }
+
+/* === 匹配度进度条 === */
+.match-bar { display: flex; height: 24px; border-radius: 12px; overflow: hidden; margin: 0.5rem 0; }
+.match-bar div { transition: width 0.5s; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: white; font-weight: 600; }
+
+/* === 表格 === */
+table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; font-size: 0.85rem; }
+th { background: #f8f8f8; text-align: left; padding: 0.6rem; font-weight: 600; border-bottom: 2px solid #e8e8e8; }
+td { padding: 0.5rem 0.6rem; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+tr:hover { background: #fafafa; }
+
+/* === 数据网格 === */
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 0.5rem 0; }
+.stat-item { background: #f8fdf9; border: 1px solid #e8f8ef; border-radius: 8px; padding: 0.8rem; text-align: center; }
+.stat-item .num { font-size: 1.5rem; font-weight: 700; color: #07c160; }
+.stat-item .label { font-size: 0.75rem; color: #888; margin-top: 0.2rem; }
+
+/* === 面试题折叠组件 === */
+.question { border: 1px solid #e8e8e8; border-radius: 10px; margin-bottom: 0.8rem; overflow: hidden; }
+.question-header { padding: 0.8rem 1rem; background: #fafafa; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+.question-header:hover { background: #f5f5f5; }
+.question-header h4 { font-size: 0.9rem; color: #333; font-weight: 600; }
+.question-header .arrow { font-size: 0.8rem; color: #999; transition: transform 0.3s; }
+.question-header.open .arrow { transform: rotate(90deg); }
+.question-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+.question-body.open { max-height: 2000px; }
+.question-body-inner { padding: 0.8rem 1rem; font-size: 0.85rem; }
+.question-body-inner p { margin-bottom: 0.5rem; }
+.question-body-inner strong { color: #07c160; }
+
+/* === 危险行高亮 === */
+.danger-row { background: #fff8f0 !important; }
+
+/* === 自我介绍区域 === */
+.self-intro { background: linear-gradient(135deg, #f0faf4 0%, #e8f8ef 100%); border: 1px solid #c8e6c9; border-radius: 10px; padding: 1.2rem; margin: 0.5rem 0; font-size: 0.9rem; line-height: 1.8; }
+.self-intro strong { color: #07c160; }
+
+/* === 标签 === */
+.tag { display: inline-block; margin: 0.2rem; padding: 0.2rem 0.5rem; background: #f0f0f0; border-radius: 4px; font-size: 0.75rem; color: #666; }
+.section-tag { font-size: 0.75rem; color: #999; margin-bottom: 0.5rem; }
+
+/* === 响应式 === */
+@media (max-width: 600px) {
+  .container { padding: 0.5rem; }
+  .card { padding: 1rem; }
+  .stat-grid { grid-template-columns: 1fr; }
+  .header h1 { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部 Header ===== -->
+<div class="header">
+  <h1>面试准备 · {公司名}</h1>
+  <p>{岗位名} | {日期YYYY-MM-DD}</p>
+</div>
+
+<!-- ===== 导航栏 ===== -->
+<div class="nav">
+  <a href="#sec-match">匹配分析</a>
+  <a href="#sec-company">公司调研</a>
+  <a href="#sec-questions">面试题预测</a>
+  <a href="#sec-danger">危险点</a>
+  <a href="#sec-intro">自我介绍</a>
+</div>
+
+<div class="container">
+
+<!-- ===== 模块1：匹配度总览 ===== -->
+<div class="card" id="sec-match">
+  <h2>匹配度总览</h2>
+  <div class="stat-grid">
+    <div class="stat-item"><div class="num">{XX}%</div><div class="label">整体匹配度</div></div>
+    <div class="stat-item"><div class="num">{X年}</div><div class="label">{核心数据点1}</div></div>
+    <div class="stat-item"><div class="num">{数据}</div><div class="label">{核心数据点2}</div></div>
+    <div class="stat-item"><div class="num">{数据}</div><div class="label">{核心数据点3}</div></div>
+  </div>
+
+  <div style="margin-top:1rem">
+    <h3>匹配度分布</h3>
+    <div class="match-bar">
+      <div style="width:{X}%;background:#07c160;">强匹配 {X}%</div>
+      <div style="width:{X}%;background:#ffab00;">部分匹配 {X}%</div>
+      <div style="width:{X}%;background:#f57c00;">中风险 {X}%</div>
+      <div style="width:{X}%;background:#e8e8e8;color:#999;">空白 {X}%</div>
+    </div>
+  </div>
+
+  <h3>强匹配项（重点展示）</h3>
+  <table>
+    <tr><td><span class="badge badge-green">{等级}</span></td><td>{维度}</td><td>{简历对应证据}</td></tr>
+    <!-- 更多行... -->
+  </table>
+
+  <h3>风险项</h3>
+  <table>
+    <tr><td><span class="badge badge-orange">{等级}</span></td><td>{短板}</td><td>{应对策略}</td></tr>
+    <!-- 更多行... -->
+  </table>
+</div>
+
+<!-- ===== 模块2：公司调研 ===== -->
+<div class="card" id="sec-company">
+  <h2>公司调研</h2>
+  <div class="section-tag">{补充信息：所属集团/部门/事业群}</div>
+
+  <h3>基本信息</h3>
+  <table>
+    <tr><td>公司全称</td><td>{公司全称}</td></tr>
+    <tr><td>成立时间</td><td>{年份}</td></tr>
+    <tr><td>规模</td><td>{人数区间}</td></tr>
+    <tr><td>融资/上市</td><td>{状态}</td></tr>
+  </table>
+
+  <h3>核心业务与产品</h3>
+  <p>{业务描述}</p>
+
+  <h3>团队背景</h3>
+  <p>{创始人/核心团队信息}</p>
+
+  <h3>市场评价</h3>
+  <p><strong>正面：</strong>{正面评价}</p>
+  <p><strong>负面/争议：</strong>{负面评价}</p>
+
+  <h3>面试前必知</h3>
+  <ul>
+    <li>{关键信息1}</li>
+    <li>{关键信息2}</li>
+    <li>{关键信息3}</li>
+  </ul>
+</div>
+
+<!-- ===== 模块3：面试题预测 ===== -->
+<div class="card" id="sec-questions">
+  <h2>面试题预测</h2>
+
+  <h3>通用必考题</h3>
+  <!-- 每道题用折叠组件 -->
+  <div class="question">
+    <div class="question-header" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');">
+      <h4>Q1：请做一下自我介绍</h4>
+      <span class="arrow">&#9654;</span>
+    </div>
+    <div class="question-body">
+      <div class="question-body-inner">
+        <p><strong>考察意图：</strong>...</p>
+        <p><strong>回答思路：</strong>...</p>
+        <p><strong>参考要点：</strong>...</p>
+      </div>
+    </div>
+  </div>
+  <!-- 更多题目... -->
+
+  <h3>岗位专项题</h3>
+  <!-- 同上折叠组件格式 -->
+
+  <h3>行为面试题（STAR法则）</h3>
+  <!-- 同上折叠组件格式 -->
+
+  <h3>公司/行业认知题</h3>
+  <!-- 同上折叠组件格式 -->
+</div>
+
+<!-- ===== 模块4：危险点汇总 ===== -->
+<div class="card" id="sec-danger">
+  <h2>危险点汇总</h2>
+  <table>
+    <tr class="danger-row"><td><span class="badge badge-red">高风险</span></td><td>{风险点}</td><td>{可能追问}</td><td>{应对策略}</td></tr>
+    <!-- 更多行... -->
+  </table>
+</div>
+
+<!-- ===== 模块5：自我介绍 ===== -->
+<div class="card" id="sec-intro">
+  <h2>定制化自我介绍</h2>
+  <div class="self-intro">
+    {自我介绍正文，关键数据用 <strong>加粗</strong> 标注}
+  </div>
+  <div style="margin-top:0.8rem; font-size:0.8rem; color:#888;">
+    <p>提示：可根据面试氛围灵活调整，约1.5-2分钟</p>
+  </div>
+</div>
+
+</div>
+
+<!-- ===== 折叠交互脚本 ===== -->
+<script>
+// 点击导航链接时添加 active 状态
+document.querySelectorAll('.nav a').forEach(link => {
+  link.addEventListener('click', function() {
+    document.querySelectorAll('.nav a').forEach(l => l.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

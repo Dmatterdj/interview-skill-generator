@@ -12,5 +12,5 @@
 <img width="2561" height="3651" alt="screencapture-file-C-Users-Dmatter-D-workbuddy-skills-references-html-template-html-2026-05-29-16_01_30" src="https://github.com/user-attachments/assets/76852981-24d5-4aae-a407-114201db2a24" />
   
 ## 反馈和其他
-欢迎给本项目提建议和反馈，有其他产品化的想法也欢迎交流  
+#### 欢迎给本项目提建议和反馈，有其他产品化的想法也欢迎交流  
 <img width="440" height="700" alt="d74b172d3fee7f01e223b3551198dae7" src="https://github.com/user-attachments/assets/c25b2bf3-4639-4f13-91ce-58d39017221c" />
